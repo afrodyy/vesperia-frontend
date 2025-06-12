@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-type Submission = {
-  id: number;
-  form_id: number;
-  user_identifier: string | null;
-  created_at: string;
-  form: {
-    id: number;
-    name: string;
-  };
-};
+import type { Submission } from "../types/form";
 
 export default function SubmissionsPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -40,9 +30,9 @@ export default function SubmissionsPage() {
             </tr>
           </thead>
           <tbody>
-            {submissions.map((sub) => (
+            {submissions.map((sub, index) => (
               <tr key={sub.id} className="border-t">
-                <td className="px-4 py-2">{sub.id}</td>
+                <td className="px-4 py-2">{index + 1}</td>
                 <td className="px-4 py-2">{sub.form?.name ?? "-"}</td>
                 <td className="px-4 py-2">{sub.user_identifier ?? "-"}</td>
                 <td className="px-4 py-2">

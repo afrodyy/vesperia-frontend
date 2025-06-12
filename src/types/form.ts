@@ -32,7 +32,7 @@ export interface Submission {
   id: number;
   form: FormSummary;
   user_identifier: string | null;
-  submitted_at: string;
+  created_at: string;
   answers: SubmissionAnswer[];
 }
 

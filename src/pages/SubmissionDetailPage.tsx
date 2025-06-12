@@ -51,7 +51,7 @@ export default function SubmissionDetailPage() {
           User: {submission.user_identifier ?? "-"}
         </p>
         <p className="text-gray-600">
-          Tanggal: {new Date(submission.submitted_at).toLocaleString()}
+          Tanggal: {new Date(submission.created_at).toLocaleString()}
         </p>
       </div>
 

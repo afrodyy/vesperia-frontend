@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import type { AnswerValue, Form } from "../types/form";
 import FormRenderer from "../components/FormRenderer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function FormPage() {
   const { formId } = useParams();
   const [form, setForm] = useState<Form | null>(null);
   const [answers, setAnswers] = useState<Record<number, AnswerValue>>({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/forms/" + formId)
@@ -28,7 +29,7 @@ export default function FormPage() {
     };
 
     const res = await fetch(
-      `http://127.0.0.1:8000/api/forms/${formId}/submit`,
+      `http://localhost:8000/api/forms/${formId}/submit`,
       {
         method: "POST",
         headers: {
@@ -40,7 +41,12 @@ export default function FormPage() {
     );
 
     const json = await res.json();
-    alert(JSON.stringify(json, null, 2));
+
+    if (json.status === "success" && json.data?.submission_id) {
+      navigate(`/submissions/${json.data.submission_id}`);
+    } else {
+      alert("Gagal menyimpan form. Coba lagi.");
+    }
   };
 
   return (

@@ -33,11 +33,20 @@ export default function FormRenderer({
 
             {field.type === "text" && (
               <input
-                type={field.sub_type === "date" ? "date" : "text"}
+                type={
+                  field.sub_type === "date"
+                    ? "date"
+                    : field.sub_type === "amount"
+                    ? "number"
+                    : "text"
+                }
+                step={field.sub_type === "amount" ? "any" : undefined}
                 value={value}
                 disabled={isDisabled}
                 onChange={(e) => onChange?.(field.id, e.target.value)}
-                className="w-full px-3 py-2 border rounded"
+                pattern={field.sub_type === "amount" ? "[0-9]*" : undefined}
+                min={field.sub_type === "amount" ? 0 : undefined}
+                className="w-full px-3 py-2 border rounded bg-white disabled:opacity-60 disabled:cursor-not-allowed"
               />
             )}
 
