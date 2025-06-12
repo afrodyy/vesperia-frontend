@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import FormPage from "./pages/FormPage";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [formId, setFormId] = useState<number>(1);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="flex flex-col gap-6 p-6 w-full bg-slate-200">
+      <div className="flex flex-row gap-3 p-3 w-full bg-white/60 rounded-xl">
+        <button
+          onClick={() => setFormId(1)}
+          className="w-min-32 px-3 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 ease-in-out duration-150 text-black cursor-pointer"
+        >
+          Form Detail Kejadian Risiko Operasional
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <button
+          onClick={() => setFormId(2)}
+          className="w-min-32 px-3 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 ease-in-out duration-150 text-black cursor-pointer"
+        >
+          Detail Kerugian
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      <div className="max-w-4xl w-full mx-auto p-6 bg-slate-100 rounded-xl">
+        <FormPage formId={formId} />
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
