@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import type { AnswerValue, Form } from "../types/form";
 import FormRenderer from "../components/FormRenderer";
+import { useParams } from "react-router-dom";
 
-export default function FormPage({ formId }: { formId: number }) {
+export default function FormPage() {
+  const { formId } = useParams();
   const [form, setForm] = useState<Form | null>(null);
   const [answers, setAnswers] = useState<Record<number, AnswerValue>>({});
 

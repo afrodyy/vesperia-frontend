@@ -1,3 +1,5 @@
+export type AnswerValue = string | string[] | null;
+
 export interface Form {
   id: number;
   name: string;
@@ -7,7 +9,7 @@ export interface Form {
 export interface FormField {
   id: number;
   label: string;
-  type: "text" | "long_text" | "radio_button" | "checkbox" | "select";
+  type: "text" | "long_text" | "radio_button" | "checkbox";
   sub_type?: "date" | "amount" | string;
   description?: string;
   parent_id?: number;
@@ -21,4 +23,21 @@ export interface FormOption {
   parent_id?: number;
 }
 
-export type AnswerValue = string | string[] | null;
+export interface SubmissionAnswer {
+  field_id: number;
+  value: AnswerValue;
+}
+
+export interface Submission {
+  id: number;
+  form: FormSummary;
+  user_identifier: string | null;
+  submitted_at: string;
+  answers: SubmissionAnswer[];
+}
+
+export interface FormSummary {
+  id: number;
+  name: string;
+  fields: FormField[];
+}

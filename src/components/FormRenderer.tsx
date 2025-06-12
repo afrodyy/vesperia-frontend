@@ -3,10 +3,20 @@ import type { AnswerValue, Form } from "../types/form";
 type Props = {
   form: Form;
   answers: Record<number, AnswerValue>;
-  onChange: (fieldId: number, value: AnswerValue) => void;
+  onChange?: (fieldId: number, value: AnswerValue) => void;
+  readonly?: boolean;
 };
 
-export default function FormRenderer({ form, answers, onChange }: Props) {
+export default function FormRenderer({
+  form,
+  answers,
+  onChange,
+  readonly = false,
+}: Props) {
+  const isDisabled = readonly || !onChange;
+
+  if (!form.fields) return null;
+
   return (
     <div className="space-y-6">
       <h2 className="text-xl font-semibold">{form.name}</h2>
@@ -25,7 +35,8 @@ export default function FormRenderer({ form, answers, onChange }: Props) {
               <input
                 type={field.sub_type === "date" ? "date" : "text"}
                 value={value}
-                onChange={(e) => onChange(field.id, e.target.value)}
+                disabled={isDisabled}
+                onChange={(e) => onChange?.(field.id, e.target.value)}
                 className="w-full px-3 py-2 border rounded"
               />
             )}
@@ -33,7 +44,8 @@ export default function FormRenderer({ form, answers, onChange }: Props) {
             {field.type === "long_text" && (
               <textarea
                 value={value}
-                onChange={(e) => onChange(field.id, e.target.value)}
+                disabled={isDisabled}
+                onChange={(e) => onChange?.(field.id, e.target.value)}
                 className="w-full px-3 py-2 border rounded"
               />
             )}
@@ -44,10 +56,11 @@ export default function FormRenderer({ form, answers, onChange }: Props) {
                   <label key={opt.id} className="flex items-center gap-2">
                     <input
                       type="radio"
+                      disabled={isDisabled}
                       name={`field-${field.id}`}
                       value={opt.label}
                       checked={value === opt.label}
-                      onChange={() => onChange(field.id, opt.label)}
+                      onChange={() => onChange?.(field.id, opt.label)}
                     />
                     {opt.label}
                   </label>
@@ -61,13 +74,14 @@ export default function FormRenderer({ form, answers, onChange }: Props) {
                   <label key={opt.id} className="flex items-center gap-2">
                     <input
                       type="checkbox"
+                      disabled={isDisabled}
                       value={opt.label}
                       checked={value?.includes(opt.label)}
                       onChange={(e) => {
                         const checked = e.target.checked;
                         const prev = Array.isArray(value) ? value : [];
 
-                        onChange(
+                        onChange?.(
                           field.id,
                           checked
                             ? [...prev, opt.label]
@@ -79,21 +93,6 @@ export default function FormRenderer({ form, answers, onChange }: Props) {
                   </label>
                 ))}
               </div>
-            )}
-
-            {field.type === "select" && (
-              <select
-                value={value}
-                onChange={(e) => onChange(field.id, e.target.value)}
-                className="w-full px-3 py-2 border rounded"
-              >
-                <option value="">-- Pilih --</option>
-                {field.options?.map((opt) => (
-                  <option key={opt.id} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
             )}
           </div>
         );
