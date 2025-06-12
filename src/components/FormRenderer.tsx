@@ -46,7 +46,7 @@ export default function FormRenderer({
                 onChange={(e) => onChange?.(field.id, e.target.value)}
                 pattern={field.sub_type === "amount" ? "[0-9]*" : undefined}
                 min={field.sub_type === "amount" ? 0 : undefined}
-                className="w-full px-3 py-2 border rounded bg-white disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full px-3 py-2 border rounded disabled:opacity-60 disabled:cursor-not-allowed"
               />
             )}
 
