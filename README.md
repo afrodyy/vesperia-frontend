@@ -103,4 +103,4 @@ src/
 
 Once the backend is seeded and running, the frontend will automatically fetch the form and display it for user interaction.
 
-Want to test backend? Jump to the [Laravel backend README](../backend/README.md) 🚀
+Want to test backend? Jump to the [Laravel backend repository](https://github.com/afrodyy/vesperia-backend) 🚀
